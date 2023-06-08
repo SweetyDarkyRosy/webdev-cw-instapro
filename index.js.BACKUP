@@ -1,4 +1,4 @@
-import { getPosts, getUserPosts, addPost } from "./api.js";
+import { getPosts } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -9,7 +9,6 @@ import {
   USER_POSTS_PAGE,
 } from "./routes.js";
 import { renderPostsPageComponent } from "./components/posts-page-component.js";
-import { renderUserPostsPageComponent } from "./components/user-posts-page-component.js";
 import { renderLoadingPageComponent } from "./components/loading-page-component.js";
 import {
   getUserFromLocalStorage,
@@ -69,21 +68,11 @@ export const goToPage = (newPage, data) => {
     }
 
     if (newPage === USER_POSTS_PAGE) {
+      // TODO: реализовать получение постов юзера из API
+      console.log("Открываю страницу пользователя: ", data.userId);
       page = USER_POSTS_PAGE;
       posts = [];
-
-      return getUserPosts({
-          userId: data.userId,
-          token: getToken()
-        }).then((newPosts) => {
-            page = USER_POSTS_PAGE;
-            posts = newPosts;
-
-            renderApp();
-          }).catch((error) => {
-              console.error(error);
-              goToPage(POSTS_PAGE);
-            });
+      return renderApp();
     }
 
     page = newPage;
@@ -120,15 +109,8 @@ const renderApp = () => {
 
   if (page === ADD_POSTS_PAGE) {
     return renderAddPostPageComponent({
-        appEl,
-        onAddPostClick ({ description, imageUrl }) {
-            addPost({
-              description: description,
-              imageUrl: imageUrl,
-              token: getToken(),});
-            goToPage(POSTS_PAGE);
-          },
-      });
+      appEl,
+    });
   }
 
   if (page === POSTS_PAGE) {
@@ -138,9 +120,9 @@ const renderApp = () => {
   }
 
   if (page === USER_POSTS_PAGE) {
-    return renderUserPostsPageComponent({
-      appEl,
-    });
+    // TODO: реализовать страницу фотографию пользвателя
+    appEl.innerHTML = "Здесь будет страница фотографий пользователя";
+    return;
   }
 };
 

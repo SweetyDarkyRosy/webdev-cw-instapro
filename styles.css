@@ -165,6 +165,14 @@
   color: red;
 }
 
+.form-error h1
+{
+  font-family: "StratosSkyeng";
+  font-weight: 500;
+  font-style: normal;
+  text-align: center;
+}
+
 .form-footer {
   margin-top: 50px;
   display: flex;
@@ -195,4 +203,10 @@
   box-sizing: border-box;
   width: 100%;
   text-align: center;
+}
+
+.invalid-el
+{
+  border: 2px solid red !important;
+  border-radius: 5px;
 }
